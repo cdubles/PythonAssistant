@@ -1,0 +1,11 @@
+============================================PLAN=============================================
+[] Create the core for taking in audio and using appropriate module
+[]create core modules(time,weather,reminder,email,etc.)
+[] make a system showing core what modules it has available 
+[]make more modules (music,phone connections(call,text),control computer, control IOT devices)
+[]starts a web server for changing settings(JSON file)
+============================================NOTES============================================
+~could use multi threading for handling request and execution
+~module system uses a JSON file to tell core what modules it can use
+~customizable wake word,voice,speed and tone
+~offline mode?
