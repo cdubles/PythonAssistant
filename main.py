@@ -1,11 +1,28 @@
-import pyttsx3
+import pyttsx3 as tts
 import os
 import speech_recognition as sr
 import time
+import json
 import  coreModules.timeModule as timeMod
-engine = pyttsx3.init('sapi5')
+
+engine = tts.init('sapi5')
 r = sr.Recognizer()
 
+wakeWord = "test"
+voice = "female"
+speechRate = 300
+volume = .5
+with open('config.json') as config_file:
+    data = json.load(config_file)
+    print(data)
+    wakeWord = data["wakeWord"]
+    voice = data["voice"]
+    speechRate = data["speechRate"]
+    volume = data["volume"]
+
+engine.setProperty('voice', voice)
+engine.setProperty('rate', speechRate)
+engine.setProperty('volume', volume)
 def say(string):
         engine.say(string)
         engine.runAndWait()
