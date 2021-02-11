@@ -1,8 +1,8 @@
 
 {
-    "wakeWord":"jinx",
-    "voice":"male",
-    "speechRate":200,
-    "volume": 1
+    "wakeWord":"jarvis",
+    "voice":"female",
+    "speechRate":100,
+    "volume": 1.0
 
 }

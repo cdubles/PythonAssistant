@@ -1,0 +1,13 @@
+{
+    "coreModules":[
+        {
+            "name":"timeMod",
+            "file":"timeMod.py"
+        }
+    ],
+    "addOnModules":[
+        {
+            
+        }
+    ]
+}

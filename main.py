@@ -3,9 +3,8 @@ import os
 import speech_recognition as sr
 import time
 import json
-import  coreModules.timeModule as timeMod
-
-engine = tts.init('sapi5')
+from coreModules import *
+engine = tts.init()
 r = sr.Recognizer()
 
 wakeWord = "test"
@@ -19,31 +18,44 @@ with open('config.json') as config_file:
     voice = data["voice"]
     speechRate = data["speechRate"]
     volume = data["volume"]
+    print(wakeWord)
 
-engine.setProperty('voice', voice)
-engine.setProperty('rate', speechRate)
-engine.setProperty('volume', volume)
 def say(string):
-        engine.say(string)
-        engine.runAndWait()
+    engine.setProperty('voice', voice)
+    engine.setProperty('rate', speechRate)
+    engine.setProperty('volume', volume)
+    print(engine.getProperty('voice'))
+    print(engine.getProperty('rate'))
+    print(engine.getProperty('volume'))
+    engine.say(string)
+    engine.runAndWait()
 
+def choose_command(data):
+    if "time" in data:
+        say(timeMod.what_time())
+    if 'year' in data:
+        say(timeMod.what_year())
+    if 'date' in data:
+        say(timeMod.what_date())
+    if 'close' in data:
+        say("good bye")
+        exit()
 while True:
     with sr.Microphone() as source:
-        say("Say something!")
-        audio = r.listen(source,timeout=5)
-        print(audio)
+        audio = r.listen(source,timeout=2)
+       #print(audio)
         try:
-            data = r.recognize_google(audio)
+            data = r.recognize_google(audio).lower()
+           #data = str(input('command'))
         except:
-            say('bad audio')
             continue
+            print('bad audio')
         print(data)
-        if "time" in data:
-            say(timeMod.what_time())
-        if 'year' in data:
-            say(timeMod.what_year())
-        if 'date' in data:
-            say(timeMod.what_date())
-        if 'close' in data:
-            say("good bye")
-            break
+        if wakeWord in data:
+            say('listening')
+            command_audio = r.listen(source, timeout=0)
+            command_data = r.recognize_google(command_audio).lower()
+            print("command data: "+command_data)
+            choose_command(command_data)
+        else:
+            print("no wake word")
